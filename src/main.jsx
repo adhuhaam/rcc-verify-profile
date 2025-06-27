@@ -25,7 +25,7 @@ const App = () => {
   if (error) {
     return (
       <div style={styles.container}>
-        <h2 style={styles.error}>🚫 {error}</h2>
+        <h2 style={styles.error}>X {error}</h2>
       </div>
     );
   }
@@ -39,7 +39,7 @@ const App = () => {
   }
 
   // Build photo file path
-  const photoUrl = `https://hros.rccmaldives.com/assets/document/${employee.emp_no}_photo_file_name.jpg`;
+  const photoUrl = `https://hros.rccmaldives.com/assets/document/${employee.emp_no}_photo_file_name`;
 
   return (
     <div style={styles.container}>
