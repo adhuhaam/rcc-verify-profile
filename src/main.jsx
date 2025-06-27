@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     if (!emp_no) {
-      setError('No employee number provided.');
+      setError('No e-number provided.');
       return;
     }
 
@@ -17,9 +17,9 @@ const App = () => {
       .get(`https://api.rccmaldives.com/ess/employees/index.php?emp_no=${emp_no}`)
       .then((res) => {
         if (res.data.status === 'success') setEmployee(res.data.data);
-        else setError(res.data.message || 'Employee not found');
+        else setError(res.data.message || 'Data not found');
       })
-      .catch(() => setError('Failed to fetch employee data.'));
+      .catch(() => setError('It too hard to get this data.'));
   }, [emp_no]);
 
   if (error) {
