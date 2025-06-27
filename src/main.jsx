@@ -5,7 +5,6 @@ import axios from 'axios';
 const App = () => {
   const [employee, setEmployee] = useState(null);
   const [error, setError] = useState('');
-
   const emp_no = new URLSearchParams(window.location.search).get('emp_no');
 
   useEffect(() => {
@@ -39,62 +38,83 @@ const App = () => {
     );
   }
 
+  // Build photo file path
+  const photoUrl = `https://hros.rccmaldives.com/assets/document/${employee.emp_no}_photo_file_name.jpg`;
+
   return (
     <div style={styles.container}>
       <div style={styles.card}>
         <img
-          src={`https://api.rccmaldives.com/ess/document/index.php?emp_no=${employee.emp_no}`}
+          src={photoUrl}
           alt="Profile"
           style={styles.image}
+          onError={(e) => (e.target.style.display = 'none')}
         />
         <h2 style={styles.name}>{employee.name}</h2>
-        <div style={styles.row}><strong>Employee ID:</strong> {employee.emp_no}</div>
-        <div style={styles.row}><strong>Designation:</strong> {employee.designation}</div>
-        <div style={styles.row}><strong>Department:</strong> {employee.department}</div>
-        <div style={styles.row}><strong>Passport No:</strong> {/* Add when available */}</div>
-        <div style={styles.row}><strong>Work Permit No:</strong> {/* Add when available */}</div>
-        <div style={styles.row}><strong>Nationality:</strong> {/* Add when available */}</div>
-        <div style={styles.row}><strong>Contact:</strong> {employee.contact_number}</div>
-        <div style={styles.row}><strong>Email:</strong> {employee.email}</div>
-        <div style={styles.row}><strong>Address:</strong> {employee.persentaddress}</div>
-        <div style={styles.row}><strong>Date of Join:</strong> {employee.date_of_join}</div>
-        <div style={styles.row}><strong>Emergency Contact:</strong> {employee.emergency_contact_name} ({employee.emergency_contact_number})</div>
+        <ProfileRow label="Employee ID" value={employee.emp_no} />
+        <ProfileRow label="Designation" value={employee.designation} />
+        <ProfileRow label="Department" value={employee.department} />
+        <ProfileRow label="Passport No" value={employee.passport_nic_no} />
+        <ProfileRow label="Work Permit No" value={employee.wp_no} />
+        <ProfileRow label="Nationality" value={employee.nationality} />
+        <ProfileRow label="Contact" value={employee.contact_number} />
+        <ProfileRow label="Email" value={employee.email} />
+        <ProfileRow label="Address" value={employee.persentaddress} />
+        <ProfileRow label="Date of Join" value={employee.date_of_join} />
+        <ProfileRow
+          label="Emergency Contact"
+          value={`${employee.emergency_contact_name} (${employee.emergency_contact_number})`}
+        />
       </div>
     </div>
   );
 };
 
+const ProfileRow = ({ label, value }) => (
+  <div style={styles.row}>
+    <strong>{label}:</strong> <span>{value || 'N/A'}</span>
+  </div>
+);
+
 const styles = {
   container: {
     fontFamily: 'Arial, sans-serif',
     padding: 16,
-    maxWidth: 400,
+    maxWidth: 420,
     margin: 'auto',
-    textAlign: 'left',
-    backgroundColor: '#f4f4f4',
-    height: '100vh',
+    backgroundColor: '#f9f9f9',
+    minHeight: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   card: {
     background: '#fff',
     borderRadius: 12,
     padding: 20,
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+    boxShadow: '0 0 12px rgba(0,0,0,0.08)',
+    width: '100%',
+    textAlign: 'left'
   },
   image: {
     width: 100,
     height: 100,
     objectFit: 'cover',
     borderRadius: '50%',
+    margin: '0 auto 16px auto',
     display: 'block',
-    margin: '0 auto 12px auto'
+    border: '2px solid #ddd'
   },
   name: {
     textAlign: 'center',
-    marginBottom: 12,
-    color: '#333'
+    marginBottom: 16,
+    color: '#333',
+    fontSize: 20
   },
   row: {
-    marginBottom: 8
+    marginBottom: 10,
+    fontSize: 15,
+    color: '#444'
   },
   error: {
     color: 'red',
